@@ -77,3 +77,45 @@ send(socketDescriptor, clientResponse, sizeof(clientResponse), 0);
 close(socketDescriptor);
 return 0;
 }
+
+
+Python:
+
+Server side Script
+# Server Side Script
+# Supports Python v3.*
+
+from socket import *
+server_port = 5000
+server_socket = socket(AF_INET,SOCK_STREAM)
+server_socket.bind(('',server_port))
+server_socket.listen(1)
+print ("Welcome: The server is now ready to receive")
+connection_socket, address = server_socket.accept()
+while True:
+  sentence = connection_socket.recv(2048).decode()
+  print('>> ',sentence)
+  message = input(">> ")
+  connection_socket.send(message.encode())
+  if(message == 'q'):
+    connectionSocket.close()
+      
+Client Side Script
+# Client Side Script
+# Supports Python v3.*
+
+from socket import *
+server_name = 'localhost'
+server_port = 5000
+client_socket = socket(AF_INET, SOCK_STREAM)
+client_socket.connect((server_name,server_port))
+
+while True:
+  sentence = input(">> ")
+  client_socket.send(sentence.encode())
+  message = client_socket.recv(2048)
+  print (">> ", message.decode())
+  if(sentence == 'q'):
+    client_socket.close()
+      
+Save the server side code in a file and name it as server.py or anything as you wish. Also save the client side code in another file and name as client.py. You can run the code in windows command prompt (cmd) by opening it in the directory you stored your script file. Then type python server.pyand hit Enter. Running client.py will require another cmd window. Type there as python client.py and hit enter. You will get a message in the server side that a client is connected. Now, you can send and receive message from and to both ends.
